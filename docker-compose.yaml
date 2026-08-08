@@ -1,0 +1,23 @@
+services:
+  backend:
+    build: ./
+    ports:
+      - "8000:8000"
+    environment:
+      DATABASE_URL: postgresql://dmat:dmat@db:5432/dmat
+    depends_on:
+      - db
+
+  db:
+    image: postgres:17
+    environment:
+      POSTGRES_USER: dmat
+      POSTGRES_PASSWORD: dmat
+      POSTGRES_DB: dmat
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:
