@@ -2,10 +2,10 @@
 An learning and practise platform for dMAT students.
 
 
-# Instructions:
+### Instructions:
 Build project using docker, it will setup the fastapi server.
 
-# Development Instructions:
+### Development Instructions:
 install uv and run:
 ```
 uv venv
@@ -23,4 +23,7 @@ finally:
 ```
 uv run uvicorn app.main:app --reload
 ```
-
+### Updating Package list:
+```
+ uv export --format requirements.txt > requirements.txt
+```
