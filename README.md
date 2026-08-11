@@ -27,3 +27,7 @@ uv run uvicorn app.main:app --reload
 ```
  uv export --format requirements.txt > requirements.txt
 ```
+### Updating DB Schema to date:
+```
+alembic upgrade head
+```
