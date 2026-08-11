@@ -1,32 +1,18 @@
-from typing import List, Optional
+from sqlalchemy import String
+from sqlalchemy.dialects.postgresql import JSONB
+from sqlalchemy.orm import Mapped, mapped_column
 
-from sqlalchemy import ForeignKey, String
-from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column, relationship
-
-
-class Base(DeclarativeBase):
-    pass
+from app.db.database import Base
 
 
+# The class will have module type for differentiation and data, solution as JSONB for different structures
 class Question(Base):
-    __tablename__ = "Questions"
+    __tablename__ = "questions"
     id: Mapped[int] = mapped_column(primary_key=True)
-    question_type: Mapped[str] = mapped_column(String(60))
-    difficulty_level: Mapped[str] = mapped_column(String(60))
-    options: Mapped[list["Option"]] = relationship(
-        back_populates="Questions", cascade="all, delete-orphan"
-    )
+    module_type: Mapped[str] = mapped_column(String(60))
+    difficulty: Mapped[str] = mapped_column(String(60))
+    data: Mapped[dict] = mapped_column(JSONB, nullable=False)
+    solution: Mapped[dict] = mapped_column(JSONB, nullable=False)
 
-
-#    correctOptions: Mapped[list["Option"]] = relationship()
-
-
-class Option(Base):
-    __tablename__ = "Options"
-    id: Mapped[int] = mapped_column(primary_key=True)
-    question_id: Mapped[int] = mapped_column(ForeignKey("Questions.id"))
-
-
-# class Content(Base):
 
 # TODO: Make proper schema and use alembic to version it

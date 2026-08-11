@@ -1,6 +1,10 @@
 from sqlalchemy import create_engine, inspect
+from sqlalchemy.orm import DeclarativeBase
 
-from app.models.Models import Base
+
+class Base(DeclarativeBase):
+    pass
+
 
 engine = create_engine(
     "postgresql://dmat:dmat@localhost:5432/dmat"
