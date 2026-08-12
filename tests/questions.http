@@ -1,0 +1,105 @@
+### Create Mathematical Equation - Low
+@baseUrl = http://localhost:8000
+
+POST {{baseUrl}}/api/questions
+Content-Type: application/json
+
+{
+  "module_type": "mathematical_equations",
+  "difficulty": "low",
+  "data": {
+    "equations": [
+      "7 + A = 14",
+      "B - 3 = A"
+    ],
+    "variables": ["A", "B"]
+  },
+  "solution": {
+    "A": 7,
+    "B": 10
+  }
+}
+
+### Create Mathematical Equation - Medium
+POST {{baseUrl}}/api/questions
+Content-Type: application/json
+
+{
+  "module_type": "mathematical_equations",
+  "difficulty": "medium",
+  "data": {
+    "equations": [
+      "3 × C = A",
+      "A + C = 8",
+      "2 × A + 2 × C = B"
+    ],
+    "variables": ["A", "B", "C"]
+  },
+  "solution": {
+    "A": 6,
+    "B": 16,
+    "C": 2
+  }
+}
+
+
+### Create Mathematical Equation - High
+POST {{baseUrl}}/api/questions
+Content-Type: application/json
+
+{
+  "module_type": "mathematical_equations",
+  "difficulty": "high",
+  "data": {
+    "equations": [
+      "C + D - A = 1",
+      "5 × C = D",
+      "13 - C = A",
+      "3 × C - 1 = B"
+    ],
+    "variables": ["A", "B", "C", "D"]
+  },
+  "solution": {
+    "A": 11,
+    "B": 5,
+    "C": 2,
+    "D": 10
+  }
+}
+
+
+### Create Latin Square
+POST {{baseUrl}}/api/questions
+Content-Type: application/json
+
+{
+  "module_type": "latin_squares",
+  "difficulty": "low",
+  "data": {
+    "grid": [
+      ["B", "?", "A", "D", "E"],
+      ["A", "B", "E", "C", "D"],
+      ["C", "D", "B", "E", "A"],
+      ["D", "E", "C", "A", "B"],
+      ["E", "A", "D", "B", "C"]
+    ],
+    "symbols": ["A", "B", "C", "D", "E"],
+    "question_mark": {
+      "row": 0,
+      "column": 1
+    },
+    "response_options": ["A", "B", "C", "D", "E"]
+  },
+  "solution": {
+    "answer": "C"
+  }
+}
+
+### Get Question
+GET {{baseUrl}}/api/questions/1
+
+### Get Question
+GET {{baseUrl}}/api/questions/2
+
+### Randome bug testings
+GET {{baseurl}}/api/questions/99999
