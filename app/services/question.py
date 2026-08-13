@@ -8,7 +8,7 @@ from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.models.assetModel import Assets
-from app.models.questionModel import Question
+from app.models.question import Question
 from app.schemas.question import QuestionCreate
 
 STORAGE_DIR = Path("storage/questions")
@@ -61,9 +61,17 @@ async def upload_question_asset(
     db: AsyncSession,
     question_id: int,
     file: UploadFile,
+    role: str,
+    position: int,
 ) -> Assets:
-    # Make sure the question exists
-    await get_question(db, question_id)
+    if position < 1:
+        raise HTTPException(
+            status_code=400,
+            detail="Position must be greater than 0",
+        )
+
+    # Get question
+    question = await get_question(db, question_id)
 
     # Validate MIME type
     if file.content_type not in ALLOWED_IMAGE_TYPES:
@@ -75,19 +83,19 @@ async def upload_question_asset(
     # Read file
     contents = await file.read()
 
-    if len(contents) > MAX_FILE_SIZE:
-        raise HTTPException(
-            status_code=400,
-            detail="Image must be smaller than 5 MB",
-        )
-
     if not contents:
         raise HTTPException(
             status_code=400,
             detail="Uploaded file is empty",
         )
 
-    # Validate that the file is actually an image
+    if len(contents) > MAX_FILE_SIZE:
+        raise HTTPException(
+            status_code=400,
+            detail="Image must be smaller than 5 MB",
+        )
+
+    # Validate actual image
     try:
         image = Image.open(BytesIO(contents))
         width, height = image.size
@@ -98,7 +106,7 @@ async def upload_question_asset(
             detail="Invalid image file",
         )
 
-    # Generate storage key
+    # Generate storage path
     extension = _get_extension(file.content_type)
     filename = f"{uuid4().hex}{extension}"
 
@@ -106,15 +114,15 @@ async def upload_question_asset(
     directory.mkdir(parents=True, exist_ok=True)
 
     storage_path = directory / filename
-    storage_key = str(storage_path)
 
-    # Save file
     try:
+        # Save image
         storage_path.write_bytes(contents)
 
+        # Create asset
         asset = Assets(
             question_id=question_id,
-            storage_key=storage_key,
+            storage_key=str(storage_path),
             mime_type=file.content_type,
             original_filename=file.filename,
             width=width,
@@ -122,17 +130,71 @@ async def upload_question_asset(
         )
 
         db.add(asset)
+
+        # Get generated asset ID without committing yet
+        await db.flush()
+
+        # Link asset to question.data
+        _link_asset(
+            question=question,
+            role=role,
+            position=position,
+            asset_id=asset.id,
+        )
+
+        # Commit Asset + Question update together
         await db.commit()
         await db.refresh(asset)
 
         return asset
 
     except Exception:
-        # Don't leave an orphaned file if DB operation fails
         storage_path.unlink(missing_ok=True)
-
         await db.rollback()
         raise
+
+
+def _link_asset(
+    question: Question,
+    role: str,
+    position: int,
+    asset_id: int,
+) -> None:
+    data = question.data
+
+    if role == "sequence":
+        items = data.get("sequence")
+
+    elif role == "option":
+        items = data.get("options")
+
+    else:
+        raise HTTPException(
+            status_code=400,
+            detail=f"Unsupported asset role: {role}",
+        )
+
+    if not isinstance(items, list):
+        raise HTTPException(
+            status_code=400,
+            detail=f"Question does not contain a valid {role} list",
+        )
+
+    for item in items:
+        if item.get("position") == position:
+            if item.get("asset_id") is not None:
+                raise HTTPException(
+                    status_code=409,
+                    detail=f"{role} position {position} already has an asset",
+                )
+
+            item["asset_id"] = asset_id
+            return
+
+    raise HTTPException(
+        status_code=404,
+        detail=f"{role} position {position} does not exist",
+    )
 
 
 def _get_extension(mime_type: str) -> str:
@@ -141,5 +203,4 @@ def _get_extension(mime_type: str) -> str:
         "image/png": ".png",
         "image/webp": ".webp",
     }
-
     return extensions[mime_type]

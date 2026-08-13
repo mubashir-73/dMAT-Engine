@@ -1,5 +1,6 @@
 ### Create Mathematical Equation - Low
 @baseUrl = http://localhost:8000
+@storage = ~/repos/dMAT-Engine/
 
 POST {{baseUrl}}/api/questions
 Content-Type: application/json
@@ -103,3 +104,49 @@ GET {{baseUrl}}/api/questions/2
 
 ### Randome bug testings
 GET {{baseurl}}/api/questions/99999
+
+
+### Create Figure Sequence
+POST {{baseurl}}/api/questions
+Content-Type: application/json
+
+{
+  "module_type": "figure_sequences",
+  "difficulty": "medium",
+  "data": {
+    "sequence": [
+      {"position": 1, "asset_id": null},
+      {"position": 2, "asset_id": null},
+      {"position": 3, "asset_id": null},
+      {"position": 4, "asset_id": null},
+      {"position": 5, "asset_id": null},
+      {"position": 6, "asset_id": null}
+    ],
+    "options": [
+      {"position": 1, "asset_id": null},
+      {"position": 2, "asset_id": null},
+      {"position": 3, "asset_id": null},
+      {"position": 4, "asset_id": null},
+      {"position": 5, "asset_id": null},
+      {"position": 6, "asset_id": null}
+    ]
+  },
+  "solution": {
+    "answers": {
+      "5": "C",
+      "6": "E"
+    }
+  }
+}
+
+### Figure 1
+POST http://localhost:8000/api/questions/12/assets
+Content-Type: multipart/form-data
+
+file=@storage/test/figure1.png
+role=sequence
+position=1
+
+
+
+###TODO: Update the post api for assets and test it 

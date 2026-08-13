@@ -1,4 +1,6 @@
-from fastapi import APIRouter, Depends, File, UploadFile
+from typing import Literal
+
+from fastapi import APIRouter, Depends, File, Form, UploadFile
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.db.database import get_db
@@ -42,14 +44,20 @@ async def get_question_route(
 async def upload_question_asset_route(
     question_id: int,
     file: UploadFile = File(...),
+    role: Literal["sequence", "option"] = Form(...),
+    position: int = Form(...),
     db: AsyncSession = Depends(get_db),
 ):
     return await upload_question_asset(
-        db,
-        question_id,
-        file,
+        db=db,
+        question_id=question_id,
+        file=file,
+        role=role,
+        position=position,
     )
 
 
 # TODO: Perform api testings for assets
+
+
 # BUG: GET {{baseUrl}}/questions/999999 should return not found 404
