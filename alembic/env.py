@@ -6,6 +6,7 @@ from alembic import context
 from app.db.database import Base
 from app.models.assetModel import Assets
 from app.models.questionModel import Question
+from app.models.testSessionModel import TestSession
 
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.

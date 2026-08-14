@@ -1,0 +1,661 @@
+# dMAT Core Module - Question Population
+# REST Client / Neovim HTTP file
+#
+# Mathematical Equations: 6 source-style exercises from the preparatory material.
+# Latin Squares: 6 valid 5x5 test puzzles, two per difficulty.
+# Figure Sequence is intentionally omitted because it requires image assets.
+#
+# Adjust only @baseUrl if your API is mounted under a different prefix.
+
+@baseUrl = http://localhost:8000
+@questionsEndpoint = {{baseUrl}}/api/questions
+
+### =========================
+### MATHEMATICAL EQUATIONS
+### =========================
+
+### Math Question 1
+POST {{questionsEndpoint}}
+Content-Type: application/json
+
+{
+  "module_type": "mathematical_equations",
+  "difficulty":"easy",
+  "data": {
+    "equations": [
+      "7 + A = 14",
+      "B - 3 = A"
+    ],
+    "variables": [
+      "A",
+      "B"
+    ]
+  },
+  "solution": {
+    "answers": {
+      "A": 7,
+      "B": 10
+    }
+  }
+}
+
+
+### Math Question 2
+POST {{questionsEndpoint}}
+Content-Type: application/json
+
+{
+  "module_type": "mathematical_equations",
+  "difficulty": "easy",
+  "data": {
+    "equations": [
+      "B / 2 = A",
+      "B - A = 8"
+    ],
+    "variables": [
+      "A",
+      "B"
+    ]
+  },
+  "solution": {
+    "answers": {
+      "A": 8,
+      "B": 16
+    }
+  }
+}
+
+
+### Math Question 3
+POST {{questionsEndpoint}}
+Content-Type: application/json
+
+{
+  "module_type": "mathematical_equations",
+  "difficulty": "medium",
+  "data": {
+    "equations": [
+      "3 * C = A",
+      "A + C = 8",
+      "2 * A + 2 * C = B"
+    ],
+    "variables": [
+      "A",
+      "B",
+      "C"
+    ]
+  },
+  "solution": {
+    "answers": {
+      "A": 6,
+      "B": 16,
+      "C": 2
+    }
+  }
+}
+
+
+### Math Question 4
+POST {{questionsEndpoint}}
+Content-Type: application/json
+
+{
+  "module_type": "mathematical_equations",
+  "difficulty": "medium",
+  "data": {
+    "equations": [
+      "18 - B = A",
+      "3 * A = C",
+      "B / 2 = A"
+    ],
+    "variables": [
+      "A",
+      "B",
+      "C"
+    ]
+  },
+  "solution": {
+    "answers": {
+      "A": 6,
+      "B": 12,
+      "C": 18
+    }
+  }
+}
+
+
+### Math Question 5
+POST {{questionsEndpoint}}
+Content-Type: application/json
+
+{
+  "module_type": "mathematical_equations",
+  "difficulty": "hard",
+  "data": {
+    "equations": [
+      "A - B + C - D = 2",
+      "10 * B = C",
+      "5 * B = A",
+      "11 + B = D"
+    ],
+    "variables": [
+      "A",
+      "B",
+      "C",
+      "D"
+    ]
+  },
+  "solution": {
+    "answers": {
+      "A": 5,
+      "B": 1,
+      "C": 10,
+      "D": 12
+    }
+  }
+}
+
+
+### Math Question 6
+POST {{questionsEndpoint}}
+Content-Type: application/json
+
+{
+  "module_type": "mathematical_equations",
+  "difficulty": "hard",
+  "data": {
+    "equations": [
+      "C + D - A = 1",
+      "5 * C = D",
+      "13 - C = A",
+      "3 * C - 1 = B"
+    ],
+    "variables": [
+      "A",
+      "B",
+      "C",
+      "D"
+    ]
+  },
+  "solution": {
+    "answers": {
+      "A": 11,
+      "B": 5,
+      "C": 2,
+      "D": 10
+    }
+  }
+}
+
+
+### =========================
+### LATIN SQUARES
+### =========================
+
+### Latin Square Question 1
+POST {{questionsEndpoint}}
+Content-Type: application/json
+
+{
+  "module_type": "latin_square",
+  "difficulty": 1,
+  "data": {
+    "type": "latin_square",
+    "grid": {
+      "rows": 5,
+      "columns": 5,
+      "cells": [
+        [
+          "D",
+          null,
+          "A",
+          null,
+          null
+        ],
+        [
+          null,
+          "E",
+          "C",
+          null,
+          null
+        ],
+        [
+          "A",
+          "D",
+          "?",
+          "B",
+          "C"
+        ],
+        [
+          "E",
+          "A",
+          "B",
+          null,
+          "D"
+        ],
+        [
+          null,
+          null,
+          null,
+          "A",
+          "E"
+        ]
+      ]
+    },
+    "missing_cell": {
+      "row": 2,
+      "column": 2
+    },
+    "options": [
+      {
+        "id": "A"
+      },
+      {
+        "id": "B"
+      },
+      {
+        "id": "C"
+      },
+      {
+        "id": "D"
+      },
+      {
+        "id": "E"
+      }
+    ]
+  },
+  "solution": {
+    "correct_option": "E"
+  }
+}
+
+
+### Latin Square Question 2
+POST {{questionsEndpoint}}
+Content-Type: application/json
+
+{
+  "module_type": "latin_square",
+  "difficulty": 1,
+  "data": {
+    "type": "latin_square",
+    "grid": {
+      "rows": 5,
+      "columns": 5,
+      "cells": [
+        [
+          "B",
+          "D",
+          "E",
+          null,
+          null
+        ],
+        [
+          "?",
+          "A",
+          "C",
+          null,
+          null
+        ],
+        [
+          "A",
+          null,
+          null,
+          "E",
+          null
+        ],
+        [
+          null,
+          "B",
+          null,
+          null,
+          "E"
+        ],
+        [
+          "D",
+          "E",
+          "A",
+          "B",
+          "C"
+        ]
+      ]
+    },
+    "missing_cell": {
+      "row": 1,
+      "column": 0
+    },
+    "options": [
+      {
+        "id": "A"
+      },
+      {
+        "id": "B"
+      },
+      {
+        "id": "C"
+      },
+      {
+        "id": "D"
+      },
+      {
+        "id": "E"
+      }
+    ]
+  },
+  "solution": {
+    "correct_option": "E"
+  }
+}
+
+
+### Latin Square Question 3
+POST {{questionsEndpoint}}
+Content-Type: application/json
+
+{
+  "module_type": "latin_square",
+  "difficulty": 2,
+  "data": {
+    "type": "latin_square",
+    "grid": {
+      "rows": 5,
+      "columns": 5,
+      "cells": [
+        [
+          null,
+          null,
+          null,
+          null,
+          null
+        ],
+        [
+          "C",
+          null,
+          null,
+          "E",
+          "D"
+        ],
+        [
+          "A",
+          "D",
+          null,
+          "C",
+          "E"
+        ],
+        [
+          "B",
+          null,
+          "?",
+          null,
+          "C"
+        ],
+        [
+          null,
+          null,
+          "E",
+          null,
+          null
+        ]
+      ]
+    },
+    "missing_cell": {
+      "row": 3,
+      "column": 2
+    },
+    "options": [
+      {
+        "id": "A"
+      },
+      {
+        "id": "B"
+      },
+      {
+        "id": "C"
+      },
+      {
+        "id": "D"
+      },
+      {
+        "id": "E"
+      }
+    ]
+  },
+  "solution": {
+    "correct_option": "D"
+  }
+}
+
+
+### Latin Square Question 4
+POST {{questionsEndpoint}}
+Content-Type: application/json
+
+{
+  "module_type": "latin_square",
+  "difficulty": 2,
+  "data": {
+    "type": "latin_square",
+    "grid": {
+      "rows": 5,
+      "columns": 5,
+      "cells": [
+        [
+          null,
+          null,
+          null,
+          null,
+          "C"
+        ],
+        [
+          "D",
+          "?",
+          null,
+          "B",
+          null
+        ],
+        [
+          null,
+          null,
+          "A",
+          "E",
+          "D"
+        ],
+        [
+          "E",
+          "A",
+          null,
+          null,
+          null
+        ],
+        [
+          null,
+          null,
+          "B",
+          "C",
+          null
+        ]
+      ]
+    },
+    "missing_cell": {
+      "row": 1,
+      "column": 1
+    },
+    "options": [
+      {
+        "id": "A"
+      },
+      {
+        "id": "B"
+      },
+      {
+        "id": "C"
+      },
+      {
+        "id": "D"
+      },
+      {
+        "id": "E"
+      }
+    ]
+  },
+  "solution": {
+    "correct_option": "C"
+  }
+}
+
+
+### Latin Square Question 5
+POST {{questionsEndpoint}}
+Content-Type: application/json
+
+{
+  "module_type": "latin_square",
+  "difficulty": 3,
+  "data": {
+    "type": "latin_square",
+    "grid": {
+      "rows": 5,
+      "columns": 5,
+      "cells": [
+        [
+          null,
+          null,
+          null,
+          "B",
+          "D"
+        ],
+        [
+          null,
+          null,
+          null,
+          null,
+          "A"
+        ],
+        [
+          null,
+          null,
+          "B",
+          null,
+          null
+        ],
+        [
+          "A",
+          "?",
+          null,
+          null,
+          null
+        ],
+        [
+          null,
+          "E",
+          "C",
+          null,
+          null
+        ]
+      ]
+    },
+    "missing_cell": {
+      "row": 3,
+      "column": 1
+    },
+    "options": [
+      {
+        "id": "A"
+      },
+      {
+        "id": "B"
+      },
+      {
+        "id": "C"
+      },
+      {
+        "id": "D"
+      },
+      {
+        "id": "E"
+      }
+    ]
+  },
+  "solution": {
+    "correct_option": "B"
+  }
+}
+
+
+### Latin Square Question 6
+POST {{questionsEndpoint}}
+Content-Type: application/json
+
+{
+  "module_type": "latin_square",
+  "difficulty": 3,
+  "data": {
+    "type": "latin_square",
+    "grid": {
+      "rows": 5,
+      "columns": 5,
+      "cells": [
+        [
+          null,
+          null,
+          null,
+          "A",
+          null
+        ],
+        [
+          null,
+          "C",
+          null,
+          null,
+          null
+        ],
+        [
+          null,
+          "D",
+          null,
+          null,
+          "E"
+        ],
+        [
+          "?",
+          null,
+          null,
+          "C",
+          null
+        ],
+        [
+          null,
+          null,
+          "D",
+          null,
+          "A"
+        ]
+      ]
+    },
+    "missing_cell": {
+      "row": 3,
+      "column": 0
+    },
+    "options": [
+      {
+        "id": "A"
+      },
+      {
+        "id": "B"
+      },
+      {
+        "id": "C"
+      },
+      {
+        "id": "D"
+      },
+      {
+        "id": "E"
+      }
+    ]
+  },
+  "solution": {
+    "correct_option": "B"
+  }
+}
+

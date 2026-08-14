@@ -16,8 +16,10 @@ Content-Type: application/json
     "variables": ["A", "B"]
   },
   "solution": {
+  "answers":{
     "A": 7,
     "B": 10
+    }
   }
 }
 
@@ -37,9 +39,11 @@ Content-Type: application/json
     "variables": ["A", "B", "C"]
   },
   "solution": {
+  "answers":{
     "A": 6,
     "B": 16,
     "C": 2
+    }
   }
 }
 
@@ -61,10 +65,12 @@ Content-Type: application/json
     "variables": ["A", "B", "C", "D"]
   },
   "solution": {
+  "answers":{
     "A": 11,
     "B": 5,
     "C": 2,
     "D": 10
+    }
   }
 }
 

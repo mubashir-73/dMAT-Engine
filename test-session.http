@@ -1,0 +1,95 @@
+@baseUrl = http://localhost:8000
+@sessionId = 1
+
+
+### ==========================================
+### 1. Create Mathematical Equation Test Session
+### ==========================================
+
+POST {{baseUrl}}/api/test-sessions
+Content-Type: application/json
+
+{
+  "module_type": "mathematical_equations",
+  "question_count": 6
+}
+
+
+### ==========================================
+### 2. Get Test Session
+### ==========================================
+
+GET {{baseUrl}}/api/test-sessions/{{sessionId}}
+
+
+### ==========================================
+### 3. Answer Question 1
+### ==========================================
+
+PUT {{baseUrl}}/api/test-sessions/{{sessionId}}/answers/6
+Content-Type: application/json
+
+{
+"answer": {
+      "A": 11,
+      "B": 5,
+      "C": 2,
+      "D": 10
+    }
+  }
+### ==========================================
+### 4. Change Answer for Question 1
+### ==========================================
+
+PUT {{baseUrl}}/api/test-sessions/{{sessionId}}/answers/1
+Content-Type: application/json
+
+{
+  "answer": "E"
+}
+
+
+### ==========================================
+### 5. Answer Question 2
+### ==========================================
+
+PUT {{baseUrl}}/api/test-sessions/{{sessionId}}/answers/2
+Content-Type: application/json
+
+{
+  "answer": "A"
+}
+
+
+### ==========================================
+### 6. Answer Question 3
+### ==========================================
+
+PUT {{baseUrl}}/api/test-sessions/{{sessionId}}/answers/3
+Content-Type: application/json
+
+{
+  "answer": "F"
+}
+
+
+### ==========================================
+### 7. Get Session With Current Answers
+### ==========================================
+
+GET {{baseUrl}}/api/test-sessions/{{sessionId}}
+
+
+### ==========================================
+### 8. Submit Test
+### ==========================================
+
+POST {{baseUrl}}/api/test-sessions/{{sessionId}}/submit
+
+
+### ==========================================
+### 9. Get Result
+### ==========================================
+
+GET {{baseUrl}}/api/test-sessions/{{sessionId}}/result
+
