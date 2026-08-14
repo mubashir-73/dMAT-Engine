@@ -24,4 +24,4 @@ def root():
     return {"message": "dMAT API is running"}
 
 
-# TODO: Now that schema and api are ready and have been tested except for figure sequence, need to build the ui modelling exactly the backend for testing and displaying the questions
+# TODO: Now we build the test session api, for now let's build a test session without timer to show my progress. we will add timer in next build

@@ -103,11 +103,11 @@ GET {{baseUrl}}/api/questions/1
 GET {{baseUrl}}/api/questions/2
 
 ### Randome bug testings
-GET {{baseurl}}/api/questions/99999
+GET {{baseUrl}}/api/questions/99999
 
 
 ### Create Figure Sequence
-POST {{baseurl}}/api/questions
+POST {{baseUrl}}/api/questions
 Content-Type: application/json
 
 {
@@ -140,8 +140,7 @@ Content-Type: application/json
 }
 
 ### Figure 1
-POST http://localhost:8000/api/questions/{{insert question id here}}/assets
-Content-Type: multipart/form-data
+POST {{baseUrl}}/api/questions/5/assets
 
 file=@storage/figure1.png
 role=sequence

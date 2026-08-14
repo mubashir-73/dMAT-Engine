@@ -1,3 +1,4 @@
+from copy import deepcopy
 from io import BytesIO
 from pathlib import Path
 from uuid import uuid4
@@ -160,7 +161,7 @@ def _link_asset(
     position: int,
     asset_id: int,
 ) -> None:
-    data = question.data
+    data = deepcopy(question.data)
 
     if role == "sequence":
         items = data.get("sequence")
@@ -189,6 +190,9 @@ def _link_asset(
                 )
 
             item["asset_id"] = asset_id
+
+            # Explicitly assign a new object to JSONB column
+            question.data = data
             return
 
     raise HTTPException(
