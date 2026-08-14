@@ -1,6 +1,6 @@
 ### Create Mathematical Equation - Low
 @baseUrl = http://localhost:8000
-@storage = ~/repos/dMAT-Engine/
+@storage = ~/repos/dMAT-Engine/app/storage/
 
 POST {{baseUrl}}/api/questions
 Content-Type: application/json
@@ -140,10 +140,10 @@ Content-Type: application/json
 }
 
 ### Figure 1
-POST http://localhost:8000/api/questions/12/assets
+POST http://localhost:8000/api/questions/{{insert question id here}}/assets
 Content-Type: multipart/form-data
 
-file=@storage/test/figure1.png
+file=@storage/figure1.png
 role=sequence
 position=1
 

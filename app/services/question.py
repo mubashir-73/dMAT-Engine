@@ -8,7 +8,7 @@ from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.models.assetModel import Assets
-from app.models.question import Question
+from app.models.questionModel import Question
 from app.schemas.question import QuestionCreate
 
 STORAGE_DIR = Path("storage/questions")

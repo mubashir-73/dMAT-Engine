@@ -3,6 +3,7 @@ from typing import Annotated
 from fastapi import Depends, FastAPI
 from sqlalchemy.orm import Session
 
+from app.api.routes.questions import router
 from app.db.database import engine
 
 
@@ -15,6 +16,7 @@ SessionDep = Annotated[Session, Depends(get_session)]
 
 
 app = FastAPI()
+app.include_router(router)
 
 
 @app.get("/")

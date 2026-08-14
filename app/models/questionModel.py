@@ -13,6 +13,3 @@ class Question(Base):
     difficulty: Mapped[str] = mapped_column(String(60))
     data: Mapped[dict] = mapped_column(JSONB, nullable=False)
     solution: Mapped[dict] = mapped_column(JSONB, nullable=False)
-
-
-# TODO: Make proper schema and use alembic to version it

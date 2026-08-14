@@ -1,4 +1,4 @@
-from sqlalchemy import create_engine, inspect
+from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker, create_async_engine
 from sqlalchemy.orm import DeclarativeBase
 
 
@@ -6,13 +6,22 @@ class Base(DeclarativeBase):
     pass
 
 
-engine = create_engine(
-    "postgresql://dmat:dmat@localhost:5432/dmat"
-)  # After deployment change localhost to db
-Base.metadata.create_all(engine)
+DATABASE_URL = "postgresql+asyncpg://dmat:dmat@localhost:5432/dmat"
 
-inspector = inspect(engine)
-existing_tables = inspector.get_table_names()
 
-print("\n🚀 --- DATABASE CONNECTION SUCCESSFUL --- 🚀")
-print(f"Tables currently existing in DB: {existing_tables}\n")
+engine = create_async_engine(
+    DATABASE_URL,
+    echo=False,
+)
+
+
+AsyncSessionLocal = async_sessionmaker(
+    bind=engine,
+    class_=AsyncSession,
+    expire_on_commit=False,
+)
+
+
+async def get_db():
+    async with AsyncSessionLocal() as session:
+        yield session

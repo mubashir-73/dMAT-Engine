@@ -8,7 +8,7 @@ from app.schemas.question import AssetResponse, QuestionCreate, QuestionResponse
 from app.services.question import create_question, get_question, upload_question_asset
 
 router = APIRouter(
-    prefix="/questions",
+    prefix="/api/questions",
     tags=["questions"],
 )
 
